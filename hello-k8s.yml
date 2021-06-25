@@ -15,11 +15,11 @@ kind: Deployment
 metadata:
   name: hello-k8s
 spec:
-  replicas: 2
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxUnavailable: 2
+      maxUnavailable: 1
       maxSurge: 2
   selector:
     matchLabels:
