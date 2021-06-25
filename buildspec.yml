@@ -1,5 +1,7 @@
 ---
 version: 0.2
+env:
+  git-credential-helper: yes
 phases:
   install:
     commands:
@@ -10,7 +12,8 @@ phases:
       - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
   pre_build:
       commands:
-        - TAG="1234"
+        - git describe --tags
+        - TAG=$(git describe --tags | cut -c 1-6)
         #- sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' hello-k8s.yml
         - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 088214155361.dkr.ecr.ap-south-1.amazonaws.com
         #- $(aws ecr get-login --no-include-email)
