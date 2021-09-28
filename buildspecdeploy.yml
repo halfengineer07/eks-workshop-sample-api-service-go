@@ -13,7 +13,8 @@ phases:
   pre_build:
       commands:
         #- git describe --tags
-        - TAG=$(git describe --tags | cut -c 1-8)
+        - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+        - TAG=${COMMIT_HASH:=latest}
         - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' hello-k8s.yml
         - $(aws ecr get-login --no-include-email)
         - export KUBECONFIG=$HOME/.kube/config
