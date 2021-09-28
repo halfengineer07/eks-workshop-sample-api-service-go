@@ -12,7 +12,7 @@ phases:
 
   pre_build:
       commands:
-        - git describe --tags
+        #- git describe --tags
         - TAG=$(git describe --tags | cut -c 1-8)
         - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:$TAG"'@' hello-k8s.yml
         - $(aws ecr get-login --no-include-email)
